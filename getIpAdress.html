@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap" rel="stylesheet">
+    <title>Get Your IP Address</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        #output {
+            white-space: pre-line; /* Preserve line breaks */
+        }
+        textarea {
+            width: 100%;
+        }
+        #ipAddress {
+            color: black;
+            font-weight: bolder;
+        }
+        .statusBoxContainer {
+            border: 4px solid black;
+            background-color: aqua;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        #statusBoxH1 {
+            display: inline-block;
+            border: 2px solid black;
+            padding: 5px;
+            font-size: 20px;
+            color: red;
+            text-align: center;
+        }
+        h1 {
+            font-family: "Londrina Outline", serif;
+            font-size: 80px;
+            font-weight: bold;
+        }
+        #console {
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Get Your IP Address</h1>
+    <p>Click the button below to get your current IP address:</p>
+    <h1 id="messageInput">&lt;color:white&gt;Public IP Address: &lt;color:red&gt;Error</h1>
+    <br>
+    <button onclick="displayMessage()">Display Message</button>
+    <h2>Output:</h2>
+    <p id="output"></p>
+    <button id="startButton">Get IP Address</button>
+    <h2 id="ipAddress" class="ipAddress">Public IPv4 IP: </h2>
+
+    <div class="statusBoxContainer">
+        <h1 id="statusBoxH1">Fetching your IP address...</h1>
+    </div>
+
+    <h1 id="console"></h1>
+
+    <script>
+        const ipDisplay = document.getElementById('ipAddress');
+        const consoleBox = document.getElementById('console');
+        const statusBox = document.getElementById('statusBoxH1');
+
+        async function fetchIPAddresses() {
+            let ipv4 = null;
+            let ipv6 = null;
+            
+            try {
+                // Fetch IPv4 address
+                const ipv4Response = await fetch('https://api.ipify.org?format=json');
+                const ipv4Data = await ipv4Response.json();
+
+                // Check if IPv4 is found
+                if (ipv4Data.ip && isIPv4(ipv4Data.ip)) {
+                    ipv4 = ipv4Data.ip;
+                } else {
+                    throw new Error('Error: Failed To Fetch IPv4 Address.');
+                }
+            } catch (error) {
+                console.error(error.message); // log the error for IPv4
+                ipv4 = 'Error: Failed To Fetch IPv4 Address.'; // display error message for IPv4
+            }
+
+            try {
+                // Fetch IPv6 address
+                const ipv6Response = await fetch('https://api64.ipify.org?format=json');
+                const ipv6Data = await ipv6Response.json();
+
+                // Check if IPv6 is found
+                if (ipv6Data.ip && isIPv6(ipv6Data.ip)) {
+                    ipv6 = ipv6Data.ip;
+                } else {
+                    throw new Error('Error: Failed To Fetch IPv6 Address.');
+                }
+            } catch (error) {
+                console.error(error.message); // log the error for IPv6
+                ipv6 = 'Error: Failed To Fetch IPv6 Address.'; // display error message for IPv6
+            }
+
+            // Display both addresses (whether successful or error message)
+            const ipFormatted = ("Public IPv4 Address: ") + `${ipv4}` +  `<br>` + "Public IPv6 Address: " + `${ipv6}`;
+            ipDisplay.innerHTML = ipFormatted;
+            statusBox.innerHTML = 'IP addresses fetched successfully!';
+            colorManager()
+        };
+
+        function displayMessage() {
+            const input = document.getElementById('messageInput').value;
+            const outputElement = document.getElementById('output');
+
+            // Replaces <color:colorname> with a colored <span> and supports multiple lines
+            const coloredMessage = input.replace(/<color:([a-zA-Z]+)>([^<]*)/g, (match, color, text) => {
+                return `<span style="color:${color};">${text}</span>`;
+            });
+
+            // Apply formatted message with preserved line breaks
+            outputElement.innerHTML = coloredMessage;
+        }
+
+        // Helper function to check if the IP is IPv4
+        function isIPv4(ip) {
+            const ipv4Pattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            return ipv4Pattern.test(ip);
+        }
+
+        // Helper function to check if the IP is IPv6
+        function isIPv6(ip) {
+            const ipv6Pattern = /^[0-9a-fA-F]{1,4}(:[0-9a-fA-F]{1,4}){7}$/;
+            return ipv6Pattern.test(ip);
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function RunIpRetriever() {
+            for (let i = 0; i < 4; i++) {
+                ipDisplay.textContent = ("Fetching IP Addresses.")
+                statusBox.textContent = ("Fetching IP Addresses.");
+                await delay(700);
+                ipDisplay.textContent = ("Fetching IP Addresses..")
+                statusBox.textContent = ("Fetching IP Addresses..");
+                await delay(700);
+                ipDisplay.textContent = ("Fetching IP Addresses...")
+                statusBox.textContent = ("Fetching IP Addresses...");
+                await delay(700);
+            }
+            fetchIPAddresses();
+        }
+
+        document.getElementById("startButton").addEventListener("click", RunIpRetriever);
+    </script>
+</body>
+</html>
