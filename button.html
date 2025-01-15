@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Button</title>
+    <style>
+        #movingButton {
+            position: absolute;
+            left: 0;
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: left 0.3s ease; /* Smooth transition for position change */
+        }
+        #positionDisplay {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            font-size: 24px;
+        }
+        #controlSwitch {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <button id="movingButton">Move Me</button>
+    <h1 id="positionDisplay">X = 0, Y = 0, Z = 0</h1>
+    <label id="controlSwitch">
+        Control with Arrow Keys: <input type="checkbox" id="controlToggle">
+    </label>
+
+    <script>
+        const button = document.getElementById('movingButton');
+        const positionDisplay = document.getElementById('positionDisplay');
+        const controlToggle = document.getElementById('controlToggle');
+        let position = 0;  // Start at the very left side of the screen
+        let velocity = 0;
+        const acceleration = 0.2;
+        let manualControl = false;
+        let keysPressed = { ArrowLeft: false, ArrowRight: false };
+        let teleporting = false; // Flag to indicate teleporting state
+
+        controlToggle.addEventListener('change', () => {
+            manualControl = controlToggle.checked;
+            if (!manualControl) moveButton();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (manualControl && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+                keysPressed[event.key] = true;
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            if (manualControl && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+                keysPressed[event.key] = false;
+            }
+        });
+
+        function manualMove() {
+            if (keysPressed.ArrowLeft) velocity -= acceleration;
+            if (keysPressed.ArrowRight) velocity += acceleration;
+            position += velocity;
+
+            // Teleport effect: If button moves off the left or right side, stagger the teleportation
+            if (position < -button.offsetWidth) {
+                teleportButton();
+                position = window.innerWidth;
+            }
+            else if (position > window.innerWidth) {
+                teleportButton();
+                position = -button.offsetWidth;
+            }
+
+            button.style.left = position + 'px';
+            positionDisplay.textContent = `X = ${position.toFixed(2)}, Y = ${window.innerHeight - button.offsetHeight}, Z = 0`;
+
+            velocity *= 0.95; // Damping velocity
+        }
+
+        function teleportButton() {
+            if (teleporting) return;  // Prevent multiple teleportations at the same time
+            teleporting = true;
+
+            let step = 0;
+            const teleportDistance = 15; // Distance per step of the teleport effect
+            const totalSteps = 10; // Number of steps in the teleportation pattern
+
+            // Staggered teleport pattern
+            const teleportInterval = setInterval(() => {
+                button.style.left = `${position + step * teleportDistance}px`; // Move button diagonally
+                step++;
+
+                if (step > totalSteps) {
+                    clearInterval(teleportInterval);
+                    teleporting = false;
+                }
+            }, 50); // Delay between each step of the teleportation
+        }
+
+        function moveButton() {
+            if (!manualControl) {
+                position -= 2; // Move left by 2px per frame
+
+                // If the position moves off the screen, reset to the other side
+                if (position < -button.offsetWidth) {
+                    teleportButton();
+                    position = window.innerWidth;
+                }
+                button.style.left = position + 'px';
+                positionDisplay.textContent = `X = ${position.toFixed(2)}, Y = ${window.innerHeight - button.offsetHeight}, Z = 0`;
+            } else {
+                manualMove();
+            }
+            requestAnimationFrame(moveButton);
+        }
+
+        moveButton();
+    </script>
+</body>
+</html>
