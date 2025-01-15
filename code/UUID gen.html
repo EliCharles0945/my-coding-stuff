@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UUID Generator</title>
+    <style>
+        /* Body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Main container */
+        #mainContainer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Input, Select, Button */
+        input, select, button {
+            padding: 12px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            border: 2px solid #444;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        input:focus, select:focus, button:hover {
+            border-color: #ff4081;
+            box-shadow: 0 0 10px rgba(255, 64, 129, 0.8);
+        }
+
+        button {
+            background-color: #ff4081;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e0245e;
+        }
+
+        /* Output Container */
+        #uuidContainer {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #333;
+            word-break: break-word;
+            display: none;
+            text-align: left;
+            transition: 0.5s ease;
+        }
+
+        #uuidContainer h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #ff4081;
+        }
+
+        #uuids {
+            font-size: 16px;
+            color: #fff;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="mainContainer">
+        <h1>UUID Generator</h1>
+        <div>
+            <input type="number" id="count" min="1" max="100" placeholder="Enter number of UUIDs" />
+        </div>
+        <div>
+            <select id="uuidVersion">
+                <option value="1">UUID v1</option>
+                <option value="3">UUID v3</option>
+                <option value="4" selected>UUID v4</option>
+                <option value="5">UUID v5</option>
+            </select>
+        </div>
+        <div>
+            <button onclick="generateUUIDs()">Generate UUIDs</button>
+        </div>
+        <div id="uuidContainer">
+            <h3>Generated UUIDs:</h3>
+            <div id="uuids"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateUUIDv4() {
+            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+
+        function generateUUIDv1() {
+            return generateUUIDv4(); // Placeholder: Implement real UUID v1 generation
+        }
+
+        function generateUUIDv3() {
+            return generateUUIDv4(); // Placeholder: Implement real UUID v3 generation
+        }
+
+        function generateUUIDv5() {
+            return generateUUIDv4(); // Placeholder: Implement real UUID v5 generation
+        }
+
+        function generateUUIDs() {
+            const version = document.getElementById('uuidVersion').value;
+            const count = parseInt(document.getElementById('count').value);
+            const output = document.getElementById('uuids');
+            const container = document.getElementById('uuidContainer');
+
+            if (isNaN(count) || count <= 0) {
+                output.textContent = "Please enter a valid number (1 or greater).";
+                container.style.display = "block";
+                return;
+            }
+
+            let uuids = "";
+            for (let i = 0; i < count; i++) {
+                switch (version) {
+                    case "1":
+                        uuids += generateUUIDv1() + "\n";
+                        break;
+                    case "3":
+                        uuids += generateUUIDv3() + "\n";
+                        break;
+                    case "4":
+                        uuids += generateUUIDv4() + "\n";
+                        break;
+                    case "5":
+                        uuids += generateUUIDv5() + "\n";
+                        break;
+                }
+            }
+
+            output.textContent = uuids;
+            container.style.display = "block";
+        }
+    </script>
+</body>
+</html>

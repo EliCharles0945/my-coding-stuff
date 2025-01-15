@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encrypter/Decrypter</title>
+    <style>
+        /* Basic reset and body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            width: 450px;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            background-color: #222;
+            border: 2px solid #444;
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            outline: none;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #ff4081;
+            box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e0245e;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animated text effect */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container fade-in">
+        <h1>Base64 Encrypter/Decrypter</h1>
+
+        <textarea id="inputBox" placeholder="Enter data to encrypt or decrypt..."></textarea><br>
+
+        <button onclick="encryptText()">Encrypt</button>
+        <button onclick="decryptBase64()">Decrypt</button>
+
+        <textarea id="outputBox" placeholder="Output will appear here..." readonly></textarea>
+    </div>
+
+    <script>
+        // Function to encode text to Base64
+        function textToBase64(text) {
+            return btoa(text); // btoa() is a built-in JavaScript function to encode to Base64
+        }
+
+        // Function to decode Base64 to text
+        function base64ToText(base64) {
+            return atob(base64); // atob() is a built-in JavaScript function to decode from Base64
+        }
+
+        // Encrypt text to Base64
+        function encryptText() {
+            const input = document.getElementById('inputBox').value;
+            document.getElementById('outputBox').value = textToBase64(input);
+            animateOutput();
+        }
+
+        // Decrypt Base64 to text
+        function decryptBase64() {
+            const input = document.getElementById('inputBox').value;
+            document.getElementById('outputBox').value = base64ToText(input);
+            animateOutput();
+        }
+
+        // Animate the output box with fade-in effect
+        function animateOutput() {
+            const outputBox = document.getElementById('outputBox');
+            outputBox.classList.remove('fade-in');
+            void outputBox.offsetWidth; // trigger reflow to restart animation
+            outputBox.classList.add('fade-in');
+        }
+    </script>
+
+</body>
+</html>

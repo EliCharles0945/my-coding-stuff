@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Alerts</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-weight: bolder; /* Corrected font-weight property */
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello, Sorry But The Person Who Sent You This Is Probably A Fake Friend Unless Ur A Kid</h1>
+    <h1 id="counter"></h1>
+    <h1 id="timeLeft">5</h1>
+
+    <script>
+        const timeLeft = document.getElementById('timeLeft');
+        let currentValue = Number(timeLeft.innerText); 
+
+        // Function to trigger spam alerts with a setInterval and control infinite or limited repetitions
+        function spamAlerts(isInfinite, times) {
+            let count = 0;
+
+            const intervalId = setInterval(() => {
+                console.log("Hello!");
+                alert("Hello!");
+                count++;
+
+                // Stop the loop if not infinite and the count reaches the specified limit
+                if (!isInfinite && count >= times) {
+                    clearInterval(intervalId);
+                    console.log("Spam alerts finished!");
+                }
+            }, 1000); // Delay of 1 second between alerts
+        }
+
+        // Example of starting the alerts:
+        // Call with true for infinite, or false for a specific number of repetitions
+        spamAlerts(true, 5);  // Infinite alerts
+        // spamAlerts(false, 5);  // Alert 5 times, then stop
+
+        // Function to decrement the counter and trigger an action when it reaches 0
+        function decrementCount() {
+            currentValue -= 1;
+            timeLeft.innerText = currentValue;
+
+            if (currentValue === 0) {
+                // You can choose to call spamAlerts here as well
+                spamAlerts(true, 5);  // Example, set to true for infinite alerts
+            }
+        }
+
+        // Set a timeout for each decrement, happening every second
+        const countdown = setInterval(() => {
+            decrementCount();
+            if (currentValue === 0) {
+                clearInterval(countdown); // Stop the countdown when 0 is reached
+            }
+        }, 1000); // Run every second
+    </script>
+</body>
+</html>

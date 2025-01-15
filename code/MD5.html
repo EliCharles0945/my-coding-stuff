@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Hash Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            width: 450px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            background-color: #222;
+            border: 2px solid #444;
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            outline: none;
+            resize: none;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #e0245e;
+        }
+    </style>
+    <!-- Load CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>MD5 Hash Generator</h1>
+
+        <textarea id="inputBox" placeholder="Enter data to hash..."></textarea><br>
+
+        <button onclick="generateMD5()">Generate MD5 Hash</button>
+
+        <textarea id="outputBox" placeholder="MD5 Hash will appear here..." readonly></textarea>
+    </div>
+
+    <script>
+        function generateMD5() {
+            // Get the input text
+            const inputText = document.getElementById('inputBox').value;
+            
+            // Check if input is empty
+            if (!inputText) {
+                alert("Please enter some text to hash.");
+                return;
+            }
+
+            // Log input text for debugging
+            console.log("Input text:", inputText);
+
+            // Generate MD5 hash using CryptoJS
+            const md5Hash = CryptoJS.MD5(inputText).toString(CryptoJS.enc.Hex);
+
+            // Output the MD5 hash to the output box
+            document.getElementById('outputBox').value = md5Hash;
+
+            // Log the MD5 hash to the console for debugging
+            console.log("Generated MD5 Hash:", md5Hash);
+        }
+    </script>
+
+</body>
+</html>

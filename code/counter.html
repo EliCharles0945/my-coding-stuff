@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            margin:  10%;
+        }
+        .counter-plus {
+            width: 200px;
+            height: 150px;
+            font-size: 100px;
+        }
+        .counter-minus {
+            width: 200px;
+            height: 150px;
+            font-size: 100px;
+            size: 1px;
+        }
+        .counter-display {
+            font-size: 125px;
+        }
+        .test{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="gg">(..)</h1>
+    <h1 class="counter-display">(..)</h1>
+    <button class="counter-minus" onclick="shrinkLaunch('counter-minus')">-</button>
+    <button class="counter-plus" onclick="shrinkLaunch('counter-plus')">+</button>
+    <button class="test" onclick="shrinkLaunch()">test</button>
+
+    <script>
+let counterDisplayElem = document.querySelector('.counter-display');
+let counterMinusElem = document.querySelector('.counter-minus');
+let counterPlusElem = document.querySelector('.counter-plus');
+
+let testElem = document.querySelector('.test');
+let testElemStyle = document.querySelector(".test").style;
+var width = document.querySelector('.test').offsetWidth;
+var height = document.querySelector('.test').offsetHeight;
+var percent = "17";
+
+let count = 0;
+
+function shrinkLaunch(element){
+    shrink(width, height, percent, element);
+};
+
+function shrink(widthPer, heightPer, percent, element){
+    //alert("width: " + width + "px");
+    var widthPercent = (widthPer * percent) / 100;
+    var heightPercent = (heightPer * percent) / 100;
+    document.querySelector(".gg").textContent = (`WidthPercent:  ${widthPercent},    HeightPercent:  ${heightPercent}  `);
+    var setWidth = (widthPer - widthPercent);
+    var setHeight = (heightPer - heightPercent)
+    if ( element === "counter-plus"){
+        alert("plus");
+    }else{
+        if (element === "counter-minus"){
+            alert("minus");
+        };
+    };
+    document.querySelector("." + element).style. = ;
+
+};
+
+updateDisplay();
+
+counterPlusElem.addEventListener("click",()=>{
+    count++;
+    updateDisplay();
+}) ;
+
+counterMinusElem.addEventListener("click",()=>{
+    count--;
+    updateDisplay();
+
+});
+
+function updateDisplay(){
+    counterDisplayElem.innerHTML = count;
+};
+    </script>
+</body>
+</html>

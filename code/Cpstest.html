@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPS Click Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            position: relative;
+        }
+        #clickArea {
+            width: 400px;
+            height: 200px;
+            background-color: #e7e7e7;
+            color: white;
+            line-height: 200px;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #startBtn {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #startBtn:disabled {
+            background-color: #ccc;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .clickEffect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: gray;
+            opacity: 1;
+            pointer-events: none;
+            animation: fadeOut 1s forwards;
+        }
+        @keyframes fadeOut {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        #timeLeft {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        #timeInput {
+            font-size: 18px;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CPS Click Test</h1>
+    <p>Click the box as fast as you can!</p>
+    
+    <label for="timeInput">Choose Test Duration (in seconds):</label>
+    <input type="number" id="timeInput" value="5" min="5" max="30" step="5" />
+    
+    <button id="startBtn" onclick="startTest()">Start Test</button>
+
+    <div id="clickArea" onclick="countClick(event)" style="display:none;"></div>
+    
+    <div id="timeLeft"></div> <!-- Time left display -->
+
+    <div id="result"></div>
+
+    <script>
+        let clickCount = 0;
+        let timer;
+        let testDuration = 5; // Default test duration
+        let testStarted = false;
+
+        function startTest() {
+            // Get the custom duration from the input field
+            testDuration = parseInt(document.getElementById('timeInput').value);
+
+            if (isNaN(testDuration) || testDuration < 1 || testDuration > 30) {
+                alert("Please enter a valid duration between 1 and 30 seconds.");
+                return;
+            }
+
+            document.getElementById('startBtn').disabled = true; // Disable start button during test
+            clickCount = 0;
+            document.getElementById('result').textContent = '';
+            document.getElementById('timeLeft').textContent = `Time Left: ${testDuration}s`;
+            document.getElementById('clickArea').style.display = 'block'; // Show the click area
+
+            let timeLeft = testDuration;
+            timer = setInterval(function() {
+                timeLeft -= 1; // Decrease the time by 1 second each interval
+                document.getElementById('timeLeft').textContent = `Time Left: ${timeLeft}s`; // Update time left display
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endTest();
+                }
+            }, 1000); // Set interval to 1 second
+        }
+
+        function countClick(event) {
+            if (!testStarted) {
+                testStarted = true;
+            }
+            clickCount++;
+
+            // Create the circle effect
+            let clickEffect = document.createElement('div');
+            clickEffect.classList.add('clickEffect');
+            document.getElementById('clickArea').appendChild(clickEffect);
+
+            // Position the circle at the click location
+            let clickX = event.clientX - event.target.offsetLeft;
+            let clickY = event.clientY - event.target.offsetTop;
+
+            clickEffect.style.left = `${clickX - 25}px`; // 25 is half the size of the circle (50px)
+            clickEffect.style.top = `${clickY - 25}px`;
+            clickEffect.style.width = '50px';
+            clickEffect.style.height = '50px';
+        }
+
+        function endTest() {
+            document.getElementById('clickArea').style.display = 'none'; // Hide the click area
+            let cps = (clickCount / testDuration).toFixed(2);
+            document.getElementById('result').textContent = `Your CPS: ${cps}`;
+            document.getElementById('startBtn').disabled = false; // Re-enable start button
+            document.getElementById('startBtn').textContent = 'Restart Test';
+            document.getElementById('timeLeft').textContent = ''; // Clear the time left display
+        }
+    </script>
+
+</body>
+</html>

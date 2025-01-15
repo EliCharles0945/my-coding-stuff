@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Name and Code Finder</title>
+<style>
+    #title {
+        text-align: center;
+    }
+    
+</style>
+</head>
+<body>
+<h1 id="title">Unicode Name and Code Finder</h1>
+<label> Please Enter Unicode Character, Or Emoji:</label>
+<input type="text" id="charInput" maxlength="2">
+<button onclick=getUnicodeInfo()></button>
+<div id="result"></div>
+    <script>
+        function getUnicodeInfo() {
+            const inputElement = document.getElementById('charInput');
+            const resultElement = document.getElementById('result');
+            const char = inputElement.value.trim();
+            
+            if (!char) {
+                resultElement.textContent = "Please enter a character.";
+                return;
+            }
+
+            const codePoint = char.codePointAt(0).toString(16).toUpperCase();
+            const unicodeLabel = `U+${codePoint.padStart(4, '0')}`;
+            
+            // Fetch Unicode character name using a basic lookup (modern browsers)
+            fetch(`https://unicode.org/Public/UCD/latest/ucd/NamesList.txt`)
+                .then(response => response.text())
+                .then(data => {
+                    const regex = new RegExp(`^${unicodeLabel}\\s+(.*)`, 'm');
+                    const match = data.match(regex);
+                    const unicodeName = match ? match[1] : "Name not found (use latest Unicode database)";
+                    resultElement.innerHTML = `Character: ${char}<br>Unicode: ${unicodeLabel}<br>Name: ${unicodeName}`;
+                })
+                .catch(() => {
+                    resultElement.innerHTML = `Character: ${char}<br>Unicode: ${unicodeLabel}<br>Name: Unable to fetch Unicode name.`;
+                });
+        }
+    </script>
+</body>
+</html>

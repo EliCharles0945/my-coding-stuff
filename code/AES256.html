@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES-256 Encryption/Decryption</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            width: 450px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            background-color: #222;
+            border: 2px solid #444;
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            outline: none;
+            resize: none;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #e0245e;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AES-256 Encryption/Decryption</h1>
+
+        <textarea id="inputBox" placeholder="Enter text to encrypt or decrypt..."></textarea><br>
+
+        <button onclick="encryptText()">Encrypt Text</button>
+        <button onclick="decryptText()">Decrypt Text</button>
+
+        <textarea id="outputBox" placeholder="Encrypted/Decrypted result will appear here..." readonly></textarea>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+    <script>
+        const secretKey = 'your-256-bit-secret-key-here';  // Replace with a strong secret key
+
+        // Function to encrypt text
+        function encryptText() {
+            const inputText = document.getElementById('inputBox').value;
+            
+            if (!inputText) {
+                alert("Please enter some text to encrypt.");
+                return;
+            }
+
+            // Encrypt the text using AES-256
+            const encrypted = CryptoJS.AES.encrypt(inputText, secretKey).toString();
+
+            // Display the encrypted text in the output box
+            document.getElementById('outputBox').value = encrypted;
+        }
+
+        // Function to decrypt text
+        function decryptText() {
+            const encryptedText = document.getElementById('inputBox').value;
+            
+            if (!encryptedText) {
+                alert("Please enter some encrypted text to decrypt.");
+                return;
+            }
+
+            // Decrypt the text using AES-256
+            const bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+            const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+
+            // Display the decrypted text in the output box
+            if (decrypted) {
+                document.getElementById('outputBox').value = decrypted;
+            } else {
+                document.getElementById('outputBox').value = "Invalid encrypted text!";
+            }
+        }
+    </script>
+
+</body>
+</html>

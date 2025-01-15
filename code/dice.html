@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Dice Roller</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6e7dff, #00bcd4);
+      margin: 0;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .dice {
+      width: 150px;
+      height: 150px;
+      background-color: #fff;
+      border: 10px solid #4CAF50;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 5rem;
+      color: #4CAF50;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .dice:hover {
+      transform: rotate(360deg);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1.5rem;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .button:active {
+      transform: translateY(2px);
+    }
+
+    .button:focus {
+      outline: none;
+    }
+
+    .footer {
+      margin-top: 50px;
+      color: white;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="dice" id="dice">1</div>
+    <button class="button" id="rollButton">Roll Dice</button>
+    <div class="footer">Made with ❤️ by Eli Charles</div>
+  </div>
+
+  <script>
+    const rollButton = document.getElementById("rollButton");
+    const dice = document.getElementById("dice");
+
+    rollButton.addEventListener("click", () => {
+      const randomNumber = Math.floor(Math.random() * 6) + 1;
+      dice.textContent = randomNumber;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard with Secondary Text</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-rows: repeat(5, auto);
+            gap: 5px;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            display: grid;
+            grid-template-rows: repeat(13, auto);
+            gap: 5px;
+        }
+        .key {
+            position: relative;
+            background-color: #ddd;
+            border: 3px solid #696969;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 2px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            user-select: none;
+            height: 20px;
+            width: 20px;
+        }
+        .fkey {
+            position: relative;
+            background-color: #ddd;
+            border: 3px solid #696969;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 2px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            user-select: none;
+            height: 20px;
+            width: 20px;
+        }
+
+        .key:active {
+            background-color: #bbb;
+        }
+        .primary {
+            font-size: 20px;
+        }
+        .secondary {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 16px;
+            color: red;
+        }
+        .atSign {
+            position: absolute;
+            top: -0.5px;
+            right: 0px;
+            font-size: 14px;
+            color: red;
+        }
+        .underscore {
+            position: absolute;
+            font-weight: 1100;
+            top: -7px;
+            right: 3px;    
+            font-size: 18px;
+            color: red;
+        }
+        .hashtag {
+            position: absolute;
+            top: -0.5px;
+            right: 3px;    
+            font-size: 15px;
+            color: red;
+        }
+        .percentSign {
+            position: absolute;
+            top: -0.4px;
+            right: 1px;
+            font-size: 15px;
+            color: red;
+        }
+        .moneySign {
+            position: absolute;
+            top: -0.5px;
+            right: 1.4px;
+            font-size: 15px;
+            color: red;
+        }
+        .andSign {
+            position: absolute;
+            top: -0.5px;
+            right: 1.3px;
+            font-size: 15px;
+            color: red;
+        }
+        .leftPerenth {
+            position: absolute;
+            top: 0.8px;
+            right: 5.3px;
+            font-size: 15px;
+            color: red;
+        }
+        .rightPerenth {
+            position: absolute;
+            top: 0.8px;
+            right: 5px;
+            font-size: 15px;
+            color: red;
+        }
+        .powerSign {
+            position: absolute;
+            top: -0.5px;
+            right: 1.5777px;
+            font-size: 18px;
+            color: red;
+        }
+        .wavySign {
+            position: absolute;
+            top: -1px;
+            right: 3px;
+            font-size: 18px;
+            color: red;
+        }
+        .backTick {
+            position: absolute;
+            top: 13px;
+            right: 9px;
+            font-size: 30px;
+            color: black;
+        }
+        .starSign {
+            position: absolute;
+            top: 0.8px;
+            right: 3.2px;
+            font-size: 22.2px;
+            color: red;
+        }
+        .plusSign {
+            position: absolute;
+            top: 0px;
+            right: 4px;
+            font-size: 15;
+            color: red;
+        }
+        .space {
+            width: 400px;
+        }
+        .enter, .backspace, .shift, .ctrl, .alt {
+            width: 120px;
+        }
+        .arrow {
+            width: 60px;
+            font-size: 22px;
+            padding: 8px;
+        }
+
+        /* Arrow keys layout on one row */
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .arrow-up {
+            width: 60px;
+            font-size: 22px;
+            padding: 8px;
+        }
+
+        .bottom-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .key.shift {
+            width: 160px;
+        }
+
+        .key.arrow {
+            width: 60px;
+            font-size: 22px;
+        }
+
+        .space-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="keyboard">
+        <!-- Top Row -->
+        <div class="row">
+            <div class="key"><span class="primary">Esc</span></div>
+            <div class="key"><span class="fkey">F1</span></div>
+            <div class="key"><span class="fkey">F2</span></div>
+            <div class="key"><span class="fkey">F3</span></div>
+            <div class="key"><span class="fkey">F4</span></div>
+            <div class="key"><span class="primary">F5</span></div>
+            <div class="key"><span class="primary">F6</span></div>
+            <div class="key"><span class="primary">F7</span></div>
+            <div class="key"><span class="primary">F8</span></div>
+            <div class="key"><span class="primary">F9</span></div>
+            <div class="key"><span class="primary">F10</span></div>
+            <div class="key"><span class="primary">F11</span></div>
+            <div class="key"><span class="primary">F12</span></div>
+        </div>
+
+        <!-- Number Row -->
+        <div class="row">
+            <div class="key"><span class="backTick">`</span><span class="wavySign">~</span></div>
+            <div class="key"><span class="primary">1</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">2</span><span class="atSign">@</span></div>
+            <div class="key"><span class="primary">3</span><span class="hashtag">#</span></div>
+            <div class="key"><span class="primary">4</span><span class="moneySign">$</span></div>
+            <div class="key"><span class="primary">5</span><span class="percentSign">%</span></div>
+            <div class="key"><span class="primary">6</span><span class="powerSign">^</span></div>
+            <div class="key"><span class="primary">7</span><span class="andSign">&</span></div>
+            <div class="key"><span class="primary">8</span><span class="starSign">*</span></div>
+            <div class="key"><span class="primary">9</span><span class="leftPerenth">&#40;</span></div>
+            <div class="key"><span class="primary">0</span><span class="rightPerenth">&#41;</span></div>
+            <div class="key"><span class="primary">-</span><span class="underscore">_</span></div>
+            <div class="key"><span class="primary">=</span><span class="plusSign">+</span></div>
+            <div class="key backspace">backspace<span class="primary"></span><span class="secondary">!</span></div>
+        </div>
+
+        <!-- Top Row -->
+        <div class="row">
+            <div class="key"><span class="primary">Tab</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">Q</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">W</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">E</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">R</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">T</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">Y</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">U</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">I</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">O</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">P</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">[</span><span class="secondary">&#123;</span></div>
+            <div class="key"><span class="primary">]</span><span class="secondary">&#125;</span></div>
+            <div class="key"><span class="primary">\</span><span class="secondary">|</span></div>
+        </div>
+
+        <!-- Middle Row -->
+        <div class="row">
+            <div class="key"><span class="primary">A</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">S</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">D</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">F</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">G</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">H</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">J</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">K</span><span class="secondary">!</span></div>
+            <div class="key"><span class="primary">L</span><span class="secondary">!</span></div>
+            <div class="key enter"><span class="primary">Enter</span><span class="secondary">!</span></div>
+        </div>
+
+        <!-- Row With Arrow Keys and Space -->
+        <div class="row">
+            <div class="arrow-container">
+                <div class="key arrow"><span class="primary">←</span><span class="secondary">!</span></div>
+                <div class="key arrow-up"><span class="primary">↑</span><span class="secondary">!</span></div>
+                <div class="key arrow"><span class="primary">→</span><span class="secondary">!</span></div>
+            </div>
+        </div>
+
+        <!-- Bottom Row with Arrow keys in a single row -->
+
+        <!-- Arrow Key Row (Down arrow below) -->
+        <div class="row">
+            <div class="key arrow"><span class="primary">↓</span><span class="secondary">!</span></div>
+        </div>
+    </div>
+</body>
+</html>

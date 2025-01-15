@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard and Mouse Event Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .output {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Press a Key or Mouse Button</h1>
+        <div class="output" id="output">Waiting for input...</div>
+    </div>
+
+    <script>
+        // Detect key press events
+        document.addEventListener('keydown', function(event) {
+            document.getElementById('output').textContent = `Key pressed: ${event.key}`;
+        });
+
+        // Detect mouse click events
+        document.addEventListener('click', function(event) {
+            let button = '';
+            switch (event.button) {
+                case 0: button = 'Left'; break;
+                case 1: button = 'Middle'; break;
+                case 2: button = 'Right'; break;
+                default: button = 'Unknown'; break;
+            }
+            document.getElementById('output').textContent = `Mouse ${button} button clicked at (${event.clientX}, ${event.clientY})`;
+        });
+    </script>
+</body>
+</html>

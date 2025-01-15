@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #5a5a5a;
+        }
+        .info {
+            background-color: #e2e2e2;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Browser Information</h1>
+    <div class="info" id="browserInfo">
+        <p><strong>Browser Name:</strong> <span id="browserName"></span></p>
+        <p><strong>Browser Version:</strong> <span id="browserVersion"></span></p>
+        <p><strong>Operating System:</strong> <span id="osInfo"></span></p>
+        <p><strong>Platform:</strong> <span id="platform"></span></p>
+        <p><strong>JavaScript Enabled:</strong> <span id="jsStatus"></span></p>
+    </div>
+
+    <script>
+        function getBrowserInfo() {
+            const userAgent = navigator.userAgent;
+            const browserName = (() => {
+                if (userAgent.indexOf("Chrome") > -1) return "Google Chrome";
+                if (userAgent.indexOf("Safari") > -1) return "Safari";
+                if (userAgent.indexOf("Firefox") > -1) return "Mozilla Firefox";
+                if (userAgent.indexOf("Edge") > -1) return "Microsoft Edge";
+                if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) return "Internet Explorer";
+                return "Unknown Browser";
+            })();
+
+            const browserVersion = navigator.appVersion;
+            const osInfo = navigator.platform;
+            const platform = navigator.userAgent;
+            const jsStatus = (navigator.javaEnabled() ? "Enabled" : "Disabled");
+
+            document.getElementById("browserName").textContent = browserName;
+            document.getElementById("browserVersion").textContent = browserVersion;
+            document.getElementById("osInfo").textContent = osInfo;
+            document.getElementById("platform").textContent = platform;
+            document.getElementById("jsStatus").textContent = jsStatus;
+        }
+
+        getBrowserInfo();
+    </script>
+</body>
+</html>

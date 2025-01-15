@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-256 Hash Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            width: 450px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            background-color: #222;
+            border: 2px solid #444;
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            outline: none;
+            resize: none;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #e0245e;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SHA-256 Hash Generator</h1>
+
+        <textarea id="inputBox" placeholder="Enter text to generate SHA-256 hash..."></textarea><br>
+
+        <button onclick="generateSHA256()">Generate SHA-256 Hash</button>
+
+        <textarea id="outputBox" placeholder="SHA-256 Hash will appear here..." readonly></textarea>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+    <script>
+        function generateSHA256() {
+            const inputText = document.getElementById('inputBox').value;
+            
+            if (!inputText) {
+                alert("Please enter some text to hash.");
+                return;
+            }
+
+            // Generate SHA-256 hash using CryptoJS
+            const sha256Hash = CryptoJS.SHA256(inputText).toString(CryptoJS.enc.Hex);
+
+            // Output the SHA-256 hash to the output box
+            document.getElementById('outputBox').value = sha256Hash;
+        }
+    </script>
+
+</body>
+</html>
