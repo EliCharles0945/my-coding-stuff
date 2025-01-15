@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Color System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        #output {
+            white-space: pre-line; /* Preserve line breaks */
+        }
+        textarea {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Custom Color Message System</h1>
+    <textarea id="messageInput" rows="5" cols="50"> 
+        <color:white>Public IP Address: <color:red>Error
+        <color:white>Public IP Address: <color:white>No Error
+    </textarea>
+    <br>
+    <button onclick="displayMessage()">Display Message</button>
+    <h2>Output:</h2>
+    <p id="output"></p>
+
+    <script>
+        function displayMessage() {
+            const input = document.getElementById('messageInput').value;
+            const outputElement = document.getElementById('output');
+
+            // Replaces <color:colorname> with a colored <span> and supports multiple lines
+            const coloredMessage = input.replace(/<color:([a-zA-Z]+)>([^<]*)/g, (match, color, text) => {
+                return `<span style="color:${color};">${text}</span>`;
+            });
+
+            // Apply formatted message with preserved line breaks
+            outputElement.innerHTML = coloredMessage;
+        }
+    </script>
+</body>
+</html>
